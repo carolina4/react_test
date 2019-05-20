@@ -8,15 +8,15 @@ class DishDetail extends Component {
 
   renderComments(comments) {
     const commentsArray = comments.map((comment) => {
-      var date = new Date(comment.date);
-      var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][date.getMonth()];
+      let date = new Date(comment.date);
+      let dateFormat = { year: 'numeric', month: 'short', day: '2-digit'};
+      let dateString = new Intl.DateTimeFormat('en-US', dateFormat).format(date);
 
       return (
         <div key={comment.id}>
           <div>{comment.comment}</div>
           <br />
-          <div>-- {comment.author}, {month} {date.getDate()}, {date.getFullYear()}</div>
+          <div>-- {comment.author}, {dateString}</div>
           <br />
         </div>
       );
@@ -55,7 +55,9 @@ class DishDetail extends Component {
   render() {
     if (this.props.dish != null) {
       return (
-        this.renderDish(this.props.dish)
+        <div className="container">
+          {this.renderDish(this.props.dish)}
+        </div>
       );
     } else {
       return (<div></div>);
